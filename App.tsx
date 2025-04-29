@@ -1,131 +1,102 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
-import React from 'react';
-import type {PropsWithChildren} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
-  ScrollView,
-  StatusBar,
-  StyleSheet,
+  SafeAreaView,
+  TextInput,
   Text,
-  useColorScheme,
+  ScrollView,
+  TouchableOpacity,
   View,
 } from 'react-native';
+import { WebView } from 'react-native-webview';
+import tw from 'twrnc';  // Tailwind CSS library
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+// Dummy modules list for search
+const dummyModules = [
+  'React',
+  'React Native',
+  'Redux',
+  'Axios',
+  'Node.js',
+  'Express',
+  'MongoDB',
+];
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
+const App = () => {
+  // State variables
+  const [searchText, setSearchText] = useState('');
+  const [debouncedText, setDebouncedText] = useState('');
+  const [modules, setModules] = useState<string[]>([]);
 
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}
+  // Debounce effect (300ms delay)
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setDebouncedText(searchText);
+    }, 300);
+    return () => clearTimeout(timeout); // Cleanup the timeout on state change
+  }, [searchText]);
 
-function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
+  // Filter modules based on debounced input
+  useEffect(() => {
+    if (debouncedText.trim() === '') {
+      setModules([]); // Reset if search is empty
+    } else {
+      const filtered = dummyModules.filter((mod) =>
+        mod.toLowerCase().includes(debouncedText.toLowerCase())
+      );
+      setModules(filtered);
+    }
+  }, [debouncedText]);
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+  // Clear search input and results
+  const clearSearch = () => {
+    setSearchText('');
+    setModules([]);
   };
 
-  /*
-   * To keep the template simple and small we're adding padding to prevent view
-   * from rendering under the System UI.
-   * For bigger apps the recommendation is to use `react-native-safe-area-context`:
-   * https://github.com/AppAndFlow/react-native-safe-area-context
-   *
-   * You can read more about it here:
-   * https://github.com/react-native-community/discussions-and-proposals/discussions/827
-   */
-  const safePadding = '5%';
-
   return (
-    <View style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        style={backgroundStyle}>
-        <View style={{paddingRight: safePadding}}>
-          <Header/>
-        </View>
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-            paddingHorizontal: safePadding,
-            paddingBottom: safePadding,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </View>
-  );
-}
+    <SafeAreaView style={tw`flex-1 bg-gray-100`}>
+      {/* Top Section: Search Input */}
+      <View style={tw`p-4`}>
+        <TextInput
+          style={tw`bg-white p-3 rounded-md border border-gray-300 text-base`}
+          placeholder="Search here"
+          value={searchText}
+          onChangeText={setSearchText}
+        />
+        {searchText.length > 0 && (
+          <TouchableOpacity onPress={clearSearch} style={tw`mt-2 self-end`}>
+            <Text style={tw`text-red-500 font-bold`}>Clear</Text>
+          </TouchableOpacity>
+        )}
+      </View>
 
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
+      {/* Search Feedback */}
+      {debouncedText.length > 0 && (
+        <Text style={tw`px-4 text-base text-gray-700`}>
+          You searched: <Text style={tw`font-semibold`}>{debouncedText}</Text>
+        </Text>
+      )}
+
+      {/* Search Results */}
+      {debouncedText.length > 0 && (
+        <ScrollView style={tw`px-4 mt-2`} keyboardShouldPersistTaps="handled">
+          {modules.map((item, index) => (
+            <Text key={index} style={tw`text-base py-1 text-gray-800`}>
+              • {item}
+            </Text>
+          ))}
+        </ScrollView>
+      )}
+
+      {/* Bottom Section: OpenStreetMap */}
+      <View style={tw`flex-1`}>
+        <WebView
+          source={{ uri: 'https://www.openstreetmap.org' }}
+          style={tw`flex-1`}
+        />
+      </View>
+    </SafeAreaView>
+  );
+};
 
 export default App;
