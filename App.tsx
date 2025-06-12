@@ -4,6 +4,8 @@ import {
   QueryClientProvider,
   focusManager,
 } from '@tanstack/react-query';
+import Toast from 'react-native-toast-message';
+import { AuthProvider } from './src/contexts/AuthContext';
 
 const queryClient = new QueryClient({});
 
@@ -11,9 +13,13 @@ const queryClient = new QueryClient({});
 export default function App() {
   return (
 <>
-      <QueryClientProvider client={queryClient}>
-        <NavigationStack />
-      </QueryClientProvider>
+      <AuthProvider>
+        <QueryClientProvider client={queryClient}>
+          <NavigationStack />
+          <Toast />
+        </QueryClientProvider>
+      </AuthProvider>
+
     </>
 )
 }

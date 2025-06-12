@@ -10,13 +10,14 @@ import {
 } from 'react-native';
 import { WebView } from 'react-native-webview';
 import tw from 'twrnc';  // Tailwind CSS library
-import ButtonTile from '../components/ButtonTile';
+import ButtonTile from '../components/buttons/ButtonTile';
 
 
 import {
   useQuery,
 } from '@tanstack/react-query'
 import { FlashList } from '@shopify/flash-list';
+import { URL_STRING } from '../lib/utils';
 
 // Dummy modules list for search
 // const dummyModules = [
@@ -95,7 +96,7 @@ const MapScreen = () => {
   const { data: masjids, isSuccess } = useQuery({
     queryKey: ['fetchMasjid'],
     queryFn: async () => {
-      const res = await fetch('https://cb1a-117-102-49-4.ngrok-free.app/fetch-all-test-masajid');
+      const res = await fetch(`${URL_STRING}/fetch-all-test-masajid`);
       console.log("API triggered !!");
       console.log({res});
       const resData = await res.json()
