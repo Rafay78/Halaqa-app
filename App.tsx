@@ -1,118 +1,70 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
-import React from 'react';
-import type {PropsWithChildren} from 'react';
+import NavigationStack from "./src/navigation/NavigationStack";
 import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+  QueryClient,
+  QueryClientProvider,
+  focusManager,
+} from '@tanstack/react-query';
+import Toast from 'react-native-toast-message';
+import { AuthProvider } from './src/contexts/AuthContext';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+const queryClient = new QueryClient({});
+// import TrackPlayer from 'react-native-track-player';
+import { useEffect, useState } from "react";
+// import { setupPlayer, addTrack } from "./service";
+import { SafeAreaView, ActivityIndicator } from "react-native";
+import { loadAzanSound } from "./src/lib/utils";
+// import Sound from "react-native-sound";
+// import { loadAzanSound } from "./src/lib/utils";
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
 
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}
+export default function App() {
 
-function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
+  // const [isPlayerReady, setIsPaylerReady] = useState(false)
+
+  // async function setup(){
+  //   let isSetup = await setupPlayer()
+
+  //   if (isSetup) {
+  //     await addTrack()
+  //   }
+
+  //   setIsPaylerReady(isSetup)
+  // }
+
+  // useEffect(() => {
+  //   setup()
+  // }, [])
+
+
+  useEffect(()=>{
+
+
+    loadAzanSound(); 
+    
+    // const handleSetupPlayer = async () => {
+    //   await TrackPlayer.setupPlayer()
+    // }
+    // handleSetupPlayer()
+  },[])
+
+  // if (!isPlayerReady) {
+  //   return (
+  //     <SafeAreaView>
+  //       <ActivityIndicator />
+  //     </SafeAreaView>
+  //   )
+  // }
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
+<>
+      <AuthProvider>
+        <QueryClientProvider client={queryClient}>
+          <NavigationStack />
+          <Toast />
+        </QueryClientProvider>
+      </AuthProvider>
+
+    </>
+)
 }
-
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
-
-export default App;
