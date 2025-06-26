@@ -5,8 +5,18 @@ Sound.setCategory('Playback');
 let azanSound = null;
 
 
+import { createNavigationContainerRef } from '@react-navigation/native';
 
-export const URL_STRING = "https://9cb1-111-88-12-110.ngrok-free.app"
+export const navigationRef = createNavigationContainerRef();
+
+export function navigate(name: string, params?: object) {
+  if (navigationRef.isReady()) {
+    navigationRef.navigate(name as never, params as never);
+  }
+}
+
+
+export const URL_STRING = "https://730c-111-88-12-110.ngrok-free.app"
 
 // import { Track } from "react-native-track-player";
 
@@ -101,6 +111,7 @@ surahName: "AL - Baqarah"}, {}
 ]
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
 
 export function isValidEmail(email: string) {
   const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;

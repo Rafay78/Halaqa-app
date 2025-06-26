@@ -7,6 +7,7 @@ import { Image, Text, View } from 'react-native';
 import tw from '../lib/tailwind';
 import QuranScreen from '../screens/QuranScreen';
 import TabBarButton from '../components/buttons/TabBarButton';
+import AppStack from './AppStack';
 const Tab = createBottomTabNavigator();
 
 function AppTabs() {
@@ -33,6 +34,8 @@ function AppTabs() {
             // height:
             // backgroundColor: "#aef"
         }}}>
+
+
           <Tab.Screen options={{
             tabBarIcon: ({focused}) => (              
             <TabBarButton focused={focused} imageURI={require('../assets/images/mosque.png')} label='Masajids'/>
@@ -47,8 +50,16 @@ function AppTabs() {
           )
           }} name="halaqaMapTab" component={HalaqaMapScreen} />
 
-        <Tab.Screen options={{
+              <Tab.Screen options={{
+                        // tabBarButton: () => <View style={{width:0, height:0, position:'absolute'}}></View>,
             
+                  tabBarIcon: ({focused}) => (
+              <TabBarButton focused={focused} imageURI={require('../assets/images/play.png')} label='Halaqahs'/>
+
+          )
+          }} name="MainHome" component={AppStack} />
+
+        <Tab.Screen options={{
             tabBarIcon: ({focused}) => (
               <TabBarButton focused={focused} imageURI={require('../assets/images/book.png')} label='Quran'/>
           )

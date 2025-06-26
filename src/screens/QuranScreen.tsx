@@ -1,28 +1,54 @@
 import React, { useState } from 'react'
-import { Dimensions, ScrollView, Text, View, FlatList } from 'react-native'
+import { Dimensions, ScrollView, Text, View, FlatList, TouchableOpacity } from 'react-native'
 const {width, height } = Dimensions.get('window')
 import tw from '../lib/tailwind';
 import QuranCarousel from '../components/QuranCarousel';
 import AyahCard from '../components/cards/AyahCard';
-import { rukus } from '../lib/utils';
+import { navigate, rukus } from '../lib/utils';
 import Modal from '../components/modals/Modal';
+import SurahScreen from './SurahScreen';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { useDeviceContext } from 'twrnc';
 
 
 function QuranScreen() {
-  const [isModalVisible, setIsModalVisible] = useState(false)
-
+useDeviceContext(tw)
+const data = [
+  {
+    surah:"Surah Al Fatiha",
+    verses: 7,
+    rukus:1
+  },
+  {
+    surah:"Surah Al Baqarah",
+    verses: 286,
+    rukus: 40
+  },
+  {
+    surah:"Surah Al Aal e Imraan",
+    verses: 200,
+    rukus: 20
+  }
+]
   return (
 
 
-      <View style={tw`flex-1 p-2`}>
-        <Text style={tw`flex text-lg self-center`}>Ruku by Ruku Quran</Text>
-      <FlatList style={tw`flex-1`} data={rukus} renderItem={({item}) => 
-      <AyahCard item={item} setIsModalVisible={setIsModalVisible}/>
-    }
-    keyExtractor={item => item.surahName}
-    ItemSeparatorComponent={() => <View style={tw`p-3`}/>}/>
-   {isModalVisible && <Modal isVisible={isModalVisible} setIsVisible={setIsModalVisible}/>}
-      </View>
+      <SafeAreaView style={tw`flex-1 p-2`}>
+        <FlatList style={tw`flex-1 `} data={data} renderItem={({item}) => 
+        <TouchableOpacity onPress={() => navigate('MainHome', {
+          screen: 'SurahScreen',
+          params: { }
+        })}
+         style={tw`rounded-md p-4 bg-[#FFFFFF] mb-2 shadow shadow-[#000] border border-[#FFFDD0]`}>
+          <View style={tw`flex-row justify-between`}>
+          <Text style={tw`self-center self-start text-black text-md`}>{item.surah}</Text>
+          <Text style={tw`self-center self-start text-black text-sm`}>Total Ayaat: {item.verses}</Text>
+          </View>
+          <Text style={tw`self-center self-start text-black text-sm`}>Total Ruku: {item.rukus}</Text>
+        </TouchableOpacity>} 
+        />
+          {/* <SurahScreen/> */}
+      </SafeAreaView>
   )
 }
 

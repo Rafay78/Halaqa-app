@@ -58,7 +58,7 @@ function AudioTrackPlayer() {
                         </TouchableOpacity>                        
                         
                         
-                        <ImageToggleBtn defImage={require('../../assets/images/play.png')} onToggleImage={require('../../assets/images/pause.png')} handlePress={handlePlayButtonPress} />
+                        <ImageToggleBtn defImage={require('../../assets/images/play.png')} onToggleImage={require('../../assets/images/pause.png')} toggle={isPlay} handlePress={handlePlayButtonPress} />
 
 
                         
