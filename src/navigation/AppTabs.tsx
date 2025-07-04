@@ -38,14 +38,14 @@ function AppTabs() {
 
           <Tab.Screen options={{
             tabBarIcon: ({focused}) => (              
-            <TabBarButton focused={focused} imageURI={require('../assets/images/mosque.png')} label='Masajids'/>
+            <TabBarButton focused={focused} imageURI={require('../assets/images/mosque.png')} label='Masajid'/>
           )
           }} name="masjidMapTab" component={MapScreen} />
 
           <Tab.Screen options={{
             
             tabBarIcon: ({focused}) => (
-              <TabBarButton focused={focused} imageURI={require('../assets/images/mosque.png')} label='Halaqahs'/>
+              <TabBarButton focused={focused} imageURI={require('../assets/images/dars.png')} label='Halaqahs'/>
 
           )
           }} name="halaqaMapTab" component={HalaqaMapScreen} />
@@ -54,14 +54,14 @@ function AppTabs() {
                         // tabBarButton: () => <View style={{width:0, height:0, position:'absolute'}}></View>,
             
                   tabBarIcon: ({focused}) => (
-              <TabBarButton focused={focused} imageURI={require('../assets/images/play.png')} label='Halaqahs'/>
+              <TabBarButton focused={focused} imageURI={require('../assets/images/home.png')} label='Home'/>
 
           )
           }} name="MainHome" component={AppStack} />
 
         <Tab.Screen options={{
             tabBarIcon: ({focused}) => (
-              <TabBarButton focused={focused} imageURI={require('../assets/images/book.png')} label='Quran'/>
+              <TabBarButton focused={focused} imageURI={require('../assets/images/quran.png')} label='Quran'/>
           )
           }} name="quranScreen" component={QuranScreen} />
 

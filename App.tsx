@@ -40,7 +40,7 @@ export default function App() {
   useEffect(()=>{
 
 
-    loadAzanSound(); 
+    loadAzanSound('alfatiha'); 
     
     // const handleSetupPlayer = async () => {
     //   await TrackPlayer.setupPlayer()

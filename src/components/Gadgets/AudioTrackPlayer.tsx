@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { View, Image, TouchableOpacity, SafeAreaView, ActivityIndicator } from 'react-native'
 import tw from '../../lib/tailwind'
-import { pauseAzanSound, playAzanSound } from '../../lib/utils'
+import { handleReleaseSound, loadAzanSound, pauseAzanSound, playAzanSound } from '../../lib/utils'
 import ImageToggleBtn from '../buttons/ImageToggleBtn'
 // import Sound from 'react-native-sound'
 // import { pauseAzanSound, playAzanSound } from '../../lib/utils'
@@ -9,7 +9,11 @@ import ImageToggleBtn from '../buttons/ImageToggleBtn'
 // import { addTrack, setupPlayer } from '../../../service'
 // import TrackPlayer from 'react-native-track-player'
 
-function AudioTrackPlayer() {
+type AudioTrackType = {
+  audio:string
+}
+
+function AudioTrackPlayer({audio}:AudioTrackType) {
     const [isPlay, setPlay] = useState(false)
 
 //     const [isPlayerReady, setIsPaylerReady] = useState(false)
@@ -24,14 +28,18 @@ function AudioTrackPlayer() {
 //     setIsPaylerReady(isSetup)
 //   }
 
-//   useEffect(() => {
-//     setup()
-//   }, [])
+  useEffect(() => {
+loadAzanSound(audio)
+
+return () => handleReleaseSound()
+  }, [])
   
  
 
     const handlePlayButtonPress = async () =>
         {
+        // loadAzanSound(surah)
+
         setPlay(!isPlay)
         if (!isPlay){
             playAzanSound()
@@ -52,8 +60,8 @@ function AudioTrackPlayer() {
 
 
   return (
-                    <View style={tw`w-full bg-[#8A9A5B] p-3 flex-row justify-around items-center rounded`}>
-                        <TouchableOpacity activeOpacity={.5}>
+                    <View style={tw`w-full bg-[#8A9A5B] p-3 flex-row justify-around items-center rounded pr-7`}>
+                        <TouchableOpacity activeOpacity={.5}> 
                             <Image source={require('../../assets/images/rewind.png')} style={tw`h-8 w-8`} />
                         </TouchableOpacity>                        
                         

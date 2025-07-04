@@ -22,7 +22,7 @@ function TabBarButton(props:TabButtonProps) {
     
                 }
               }/>
-              <Text style={[tw`text-[13px] font-bold w-20 `, {}]}>{label}</Text>
+              <Text style={[tw`${focused ? 'text-[#4e4]':'text-black'} text-[13px] font-bold w-20`, {}]}>{label}</Text>
             </View>
   )
 }

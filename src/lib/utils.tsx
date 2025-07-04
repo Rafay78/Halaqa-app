@@ -1,8 +1,27 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Sound from 'react-native-sound';
 
 Sound.setCategory('Playback');
 
 let azanSound = null;
+
+export type rukuTypes = {
+  "ruku": number,
+  "arabic": string,
+  "translation": string,
+  "arabic_recitation": string,
+  "tafseer_audio": string,
+  "tafseer_video": string
+  }
+
+  export const rukuDefault = {
+    "ruku": 0,
+    "arabic": "",
+    "translation": "",
+    "arabic_recitation": "",
+    "tafseer_audio": "",
+    "tafseer_video": ""
+    }
 
 
 import { createNavigationContainerRef } from '@react-navigation/native';
@@ -73,45 +92,6 @@ export const URL_STRING = "https://730c-111-88-12-110.ngrok-free.app"
 
 
 
-export const rukus =  [
-  {
-  arabic:`بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِیْمِ
-اَلْحَمْدُ لِلّٰهِ رَبِّ الْعٰلَمِیْنَ(1) الرَّحْمٰنِ الرَّحِیْمِ(2) مٰلِكِ یَوْمِ الدِّیْنِﭤ(3) اِیَّاكَ نَعْبُدُ وَ اِیَّاكَ نَسْتَعِیْنُﭤ(4) اِهْدِنَا الصِّرَاطَ الْمُسْتَقِیْمَ(5) صِرَاطَ الَّذِیْنَ اَنْعَمْتَ عَلَیْهِمْ ﴰ غَیْرِ الْمَغْضُوْبِ عَلَیْهِمْ وَ لَا الضَّآلِّیْنَ(7)`,
-translation: `1. In the Name of Allah, the Most Beneficent, the Most Merciful.  
-
-2. All the praises and thanks be to Allah, the Lord of the 'Alamin (mankind, jinns and all that exists).  
-
-3. The Most Beneficent, the Most Merciful.  
-
-4. The Only Owner (and the Only Ruling Judge) of the Day of Recompense (i.e. the Day of Resurrection)  
-
-5. You (Alone) we worship, and You (Alone) we ask for help (for each and everything).  
-
-6. Guide us to the Straight Way 
-
-7. The Way of those on whom You have bestowed Your Grace, not (the way) of those who earned Your Anger (such as the Jews), nor of those who went astray (such as the Christians). `,
-surahName: "AL - Fatiha"
-},
-
-{ arabic:`الٓمّٓ(1)  ذٰلِكَ الْكِتٰبُ لَا رَیْبَ ﶈ فِیْهِ ۚۛ-هُدًى لِّلْمُتَّقِیْنَ(2)  الَّذِیْنَ یُؤْمِنُوْنَ بِالْغَیْبِ وَ یُقِیْمُوْنَ الصَّلٰوةَ وَ مِمَّا رَزَقْنٰهُمْ یُنْفِقُوْنَ(3)  وَ الَّذِیْنَ یُؤْمِنُوْنَ بِمَاۤ اُنْزِلَ اِلَیْكَ وَ مَاۤ اُنْزِلَ مِنْ قَبْلِكَۚ-وَ بِالْاٰخِرَةِ هُمْ یُوْقِنُوْنَﭤ(4)  اُولٰٓىٕكَ عَلٰى هُدًى مِّنْ رَّبِّهِمْۗ-وَ اُولٰٓىٕكَ هُمُ الْمُفْلِحُوْنَ(5)  اِنَّ الَّذِیْنَ كَفَرُوْا سَوَآءٌ عَلَیْهِمْ ءَاَنْذَرْتَهُمْ اَمْ لَمْ تُنْذِرْهُمْ لَا یُؤْمِنُوْنَ(6)  خَتَمَ اللّٰهُ عَلٰى قُلُوْبِهِمْ وَ عَلٰى سَمْعِهِمْؕ-وَ عَلٰۤى اَبْصَارِهِمْ غِشَاوَةٌ٘-وَّ لَهُمْ عَذَابٌ عَظِیْمٌ(7)`,
-translation: `1. Alif-Lam-Mim. [These letters are one of the miracles of the Qur'an and none but Allah (Alone) knows their meanings].
-
-2. This is the Book (the Qur'an), whereof there is no doubt, a guidance to those who are Al-Muttaqun [the pious and righteous persons who fear Allah much (abstain from all kinds of sins and evil deeds which He has forbidden) and love Allah much (perform all kinds of good deeds which He has ordained)].
-
-3. Who believe in the Ghaib and perform As-Salat (Iqamat-as-Salat), and spend out of what we have provided for them [i.e. give Zakat , spend on themselves, their parents, their children, their wives, etc., and also give charity to the poor and also in Allah's Cause - Jihad, etc.].
-
-4. And who believe in (the Qur'an and the Sunnah) which has been sent down (revealed) to you (Muhammad Peace be upon him ) and in [the Taurat (Torah) and the Injeel (Gospel), etc.] which were sent down before you and they believe with certainty in the Hereafter. (Resurrection, recompense of their good and bad deeds, Paradise and Hell, etc.).
-
-5. They are on (true) guidance from their Lord, and they are the successful.
-
-6. Verily, those who disbelieve, it is the same to them whether you (O Muhammad Peace be upon him ) warn them or do not warn them, they will not believe.
-
-7. Allah has set a seal on their hearts and on their hearings, (i.e. they are closed from accepting Allah's Guidance), and on their eyes there is a covering. Theirs will be a great torment.`,
-surahName: "AL - Baqarah"}, {}
-]
-
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useNavigation } from '@react-navigation/native';
 
 export function isValidEmail(email: string) {
   const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
@@ -147,8 +127,9 @@ export const handleSetToken = async (response: any) => {
 
 // react-native-sound config
 
-export const loadAzanSound = () => {
-  azanSound = new Sound('alfatiha.mp3', Sound.MAIN_BUNDLE, (error) => {
+export const loadAzanSound = (surah?:string) => {
+  azanSound = new Sound(surah, null, (error) => {
+    // azanSound = new Sound(`${surah}.mp3`, Sound.MAIN_BUNDLE, (error) => {
     if (error) {
       console.log('❌ Failed to load sound', error);
     } else {
@@ -182,3 +163,12 @@ export const playAzanSound = () => {
     console.log('⚠️ Sound not loaded yet');
   }
 };
+
+export const handleReleaseSound = () => {
+  if (azanSound) {
+    azanSound.release()
+  }else{
+    console.log("Release Failed ❌");
+    
+  }
+}
