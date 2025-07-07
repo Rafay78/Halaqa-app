@@ -7,13 +7,13 @@ import { Image, Text, View } from 'react-native';
 import tw from '../lib/tailwind';
 import QuranScreen from '../screens/QuranScreen';
 import TabBarButton from '../components/buttons/TabBarButton';
-import AppStack from './AppStack';
+import QuranStack from './QuranStack';
 const Tab = createBottomTabNavigator();
 
 function AppTabs() {
   return (
     // <NavigationContainer></NavigationContainer>
-        <Tab.Navigator  initialRouteName='masjidMapTab' screenOptions={{animation:'shift', headerShown:false, tabBarShowLabel:false, tabBarLabelPosition:"below-icon" ,tabBarItemStyle: {
+        <Tab.Navigator  initialRouteName='MainHome' screenOptions={{animation:'shift', headerShown:false, tabBarShowLabel:false, tabBarLabelPosition:"below-icon" ,tabBarItemStyle: {
           alignItems: 'center',
           justifyContent: 'center',
         },tabBarStyle:{
@@ -57,13 +57,26 @@ function AppTabs() {
               <TabBarButton focused={focused} imageURI={require('../assets/images/home.png')} label='Home'/>
 
           )
-          }} name="MainHome" component={AppStack} />
+          }}
+         
+
+          name="MainHome" component={MainScreen}/>
 
         <Tab.Screen options={{
             tabBarIcon: ({focused}) => (
               <TabBarButton focused={focused} imageURI={require('../assets/images/quran.png')} label='Quran'/>
           )
-          }} name="quranScreen" component={QuranScreen} />
+          }} 
+           listeners={({ navigation }) => ({
+            tabPress: e => {
+              // Prevent default behavior
+              e.preventDefault();
+              // Reset the stack to initial route
+              // navigation.navigate('MainHome', { screen: 'MainScreen' });
+              navigation.navigate('quran', {screen: 'quranScreen'});
+            },
+          })}
+          name="quran" component={QuranStack} />
 
         </Tab.Navigator> 
      )

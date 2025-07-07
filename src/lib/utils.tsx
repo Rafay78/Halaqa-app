@@ -1,9 +1,18 @@
+import { createNavigationContainerRef } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Sound from 'react-native-sound';
+
+export const URL_STRING = "https://730c-111-88-12-110.ngrok-free.app"
+
 
 Sound.setCategory('Playback');
 
 let azanSound = null;
+
+export type homeOptionsType =   {
+  TileTxt: string,
+  navigate2: string | {}
+}
 
 export type rukuTypes = {
   "ruku": number,
@@ -24,7 +33,6 @@ export type rukuTypes = {
     }
 
 
-import { createNavigationContainerRef } from '@react-navigation/native';
 
 export const navigationRef = createNavigationContainerRef();
 
@@ -35,7 +43,42 @@ export function navigate(name: string, params?: object) {
 }
 
 
-export const URL_STRING = "https://730c-111-88-12-110.ngrok-free.app"
+export const homeTileData:homeOptionsType[] = [
+  {
+    TileTxt: "Masjid Finder",
+    navigate2: 'masjidMapTab'
+    // navigate2: {
+    //   name: 'appTabs', params: {
+    //   screen: "masjidMapTab",
+    //   params: {}
+    // }
+  // }
+  },
+  {
+    TileTxt: "Halaqa Qurani",
+    navigate2: 'halaqaMapTab'
+    // {
+    //   name: 'appTabs', params: {
+    //   screen: "halaqaMapTab",
+    //   params: {}
+    // }
+  // }
+  },
+  {
+    TileTxt: "Quran Tafseer",
+    navigate2: 'quran'
+  // {
+  //     name: 'appTabs', params: {
+  //     screen: 'quranScreen',
+  //     params: {}
+  //   }
+  // }
+  },
+  {
+    TileTxt: "Hadeeth Collections",
+    navigate2: ""
+  },
+]
 
 // import { Track } from "react-native-track-player";
 

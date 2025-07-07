@@ -2,7 +2,7 @@ import React from 'react'
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useAuthContext } from '../contexts/AuthContext';
-import AppStack from './AppStack';
+import AppStack from './QuranStack';
 import AuthStack from './AuthStack';
 import AppTabs from './AppTabs';
 import { navigationRef } from '../lib/utils';

@@ -6,19 +6,17 @@ import DashboardScreen from '../components/prayerTracker/DashboardScreen';
 import PrayerScreen from '../screens/salah/PrayerScreen';
 import HalaqaMapScreen from '../screens/HalaqaMapScreen';
 import SurahScreen from '../screens/SurahScreen';
+import AppTabs from './AppTabs';
+import QuranScreen from '../screens/QuranScreen';
 
 
 const Stack = createNativeStackNavigator();
 
-export default function AppStack() {
+export default function QuranStack() {
   return (
-    <Stack.Navigator screenOptions={{headerShown:false}} initialRouteName="MainScreen">
-      <Stack.Screen name="mapScreen" component={MapScreen} />
-      <Stack.Screen name="MainScreen" component={MainScreen}/>
-      {/* <Stack.Screen name="dashboardScreen" component={DashboardScreen}/> */}
-      {/* <Stack.Screen name="prayer" component={PrayerScreen}/> */}
+    <Stack.Navigator screenOptions={{headerShown:false}} initialRouteName="quranScreen">
+      <Stack.Screen name="quranScreen" component={QuranScreen}/>
       <Stack.Screen name="SurahScreen" component={SurahScreen}/>
-      <Stack.Screen name="halaqaMapScreen" component={HalaqaMapScreen}/>
     </Stack.Navigator>
   );
 }

@@ -21,7 +21,7 @@ useDeviceContext(tw)
 
       <SafeAreaView style={tw`flex-1 p-2`}>
         <FlatList style={tw`flex-1`} data={quran} renderItem={({item , index}) => 
-        <TouchableOpacity onPress={() => navigate('MainHome', {
+        <TouchableOpacity onPress={() => navigate('quran', {
           screen: 'SurahScreen',
           params: { name: item.transliteration, index}
         })}
