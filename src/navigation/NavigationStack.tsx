@@ -6,14 +6,16 @@ import AppStack from './QuranStack';
 import AuthStack from './AuthStack';
 import AppTabs from './AppTabs';
 import { navigationRef } from '../lib/utils';
+import AppNavigator from './AppNavigator';
 
-const Stack = createNativeStackNavigator();
+
 function NavigationStack() {
 
   const {user} = useAuthContext()
   return (
     <NavigationContainer ref={navigationRef}>
-      <AppTabs /> 
+      <AppNavigator/>
+      {/* <AppTabs />  */}
         {/* {user ? <AppTabs /> : <AuthStack />} */}
     </NavigationContainer>
   )

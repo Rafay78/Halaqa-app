@@ -11,7 +11,7 @@ let azanSound = null;
 
 export type homeOptionsType =   {
   TileTxt: string,
-  navigate2: string | {}
+  navigate2: string | {} | Function | undefined
 }
 
 export type rukuTypes = {
@@ -42,6 +42,30 @@ export function navigate(name: string, params?: object) {
   }
 }
 
+export const hadeeth_book_data = [
+  {
+    value: 'sahih-bukhari',
+    lable: 'SAHIH Al-BUKHARI',
+    image: {
+      uri: 'https://www.shutterstock.com/shutterstock/photos/2301248363/display_1500/stock-vector-sahih-al-bukhari-islamic-arabic-calligraphy-2301248363.jpg',
+    },
+  },
+  {
+    value: 'sahih-muslim',
+    lable: 'SAHIH MUSLIM',
+    image: {
+      uri: 'https://www.shutterstock.com/image-vector/sahih-muslim-name-calligraphy-text-260nw-2539332329.jpg',
+    },
+  },
+  {
+    value: 'sunan-abu-dawood',
+    lable: 'SUNAN ABU DAWOOD',
+    image: {
+      uri: 'https://kitaabnow.com/wp-content/uploads/2023/12/Sunan-Abu-Dawood-Sharif-Set-KitaabNow.com_.jpg',
+    }
+  }
+  ];
+
 
 export const homeTileData:homeOptionsType[] = [
   {
@@ -66,7 +90,13 @@ export const homeTileData:homeOptionsType[] = [
   },
   {
     TileTxt: "Quran Tafseer",
-    navigate2: 'quran'
+    navigate2: {
+          name: 'quran', params: {
+          screen: 'quranScreen',
+          params: {}
+        }
+      }
+    // 'quran'
   // {
   //     name: 'appTabs', params: {
   //     screen: 'quranScreen',
@@ -76,9 +106,22 @@ export const homeTileData:homeOptionsType[] = [
   },
   {
     TileTxt: "Hadeeth Collections",
-    navigate2: ""
+    navigate2: "HadeethScreen"
+    // {
+    //       name: 'quran', params: {
+    //       screen: 'hadeethScreen',
+    //       params: {}
+    //     }
+    //   }
   },
 ]
+
+export enum SearchByoptions  {
+  arabic = "arabic",
+  english = "english",
+  urdu = "urdu",
+  hadees_no = "hadees_no"
+}
 
 // import { Track } from "react-native-track-player";
 

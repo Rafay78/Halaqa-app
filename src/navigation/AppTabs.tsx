@@ -63,10 +63,15 @@ function AppTabs() {
           name="MainHome" component={MainScreen}/>
 
         <Tab.Screen options={{
+          // tabBarButton: (props) => (
+          //   <TabBarButton focused={props} imageURI={require('../assets/images/quran.png')} label='Quran'/>
+
+          // )
             tabBarIcon: ({focused}) => (
               <TabBarButton focused={focused} imageURI={require('../assets/images/quran.png')} label='Quran'/>
           )
-          }} 
+          }}
+
            listeners={({ navigation }) => ({
             tabPress: e => {
               // Prevent default behavior
@@ -76,7 +81,9 @@ function AppTabs() {
               navigation.navigate('quran', {screen: 'quranScreen'});
             },
           })}
-          name="quran" component={QuranStack} />
+
+          name="quran" component={QuranStack} 
+          />
 
         </Tab.Navigator> 
      )
